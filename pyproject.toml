@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "poetry add pytest"
+version = "poetry install"
+description = "poetry update"
+authors = ["none"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
