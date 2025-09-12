@@ -58,14 +58,4 @@ class Category:
         """
         return self._products
 
-    @property
-    def products(self):
-        """
-        Геттер для получения списка товаров в формате строки.
-        """
-        if not self._products:
-            return "Нет товаров в категории."
-
-        product_strings = [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self._products]
-        return "\n".join(product_strings)
 
