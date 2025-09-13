@@ -22,17 +22,16 @@ class Category:
     total_categories = 0
     total_products = 0
 
-    def __init__(self, name, description, products=None):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.products = products
-        self._products = self._products = products if products is not None else []
+        self._products = []
 
         Category.total_categories += 1
-        Category.total_products += len(self._products)
+        #Category.total_products += len(self._products)
 
     @property
-    def products(self):
+    def goods(self):
         """
         Геттер для получения списка товаров в формате строки.
         """
@@ -44,28 +43,21 @@ class Category:
 
     def add_product(self, product: Product):
         """
-        Добавляет объект класса Product в список товаров категории.
+        Добавляет объект класса Product в приватный список товаров категории.
         """
         if isinstance(product, Product):
             self._products.append(product)
+            Category.total_products += 1  # Увеличиваем общее количество продуктов
             print(f"Товар '{product.name}' добавлен в категорию '{self.name}'")
         else:
             print(f"Ошибка: Объект '{product}' не является экземпляром класса Product.")
 
-    def get_products(self):
-        """
-        Возвращает список товаров в категории (вспомогательный метод).
-        """
-        return self._products
+    @classmethod
+    def get_total_categories(cls):
+        return cls.total_categories
 
-    @property
-    def products(self):
-        """
-        Геттер для получения списка товаров в формате строки.
-        """
-        if not self._products:
-            return "Нет товаров в категории."
+    @classmethod
+    def get_total_products(cls):
+        return cls.total_products
 
-        product_strings = [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self._products]
-        return "\n".join(product_strings)
 

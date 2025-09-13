@@ -20,45 +20,44 @@ class TestProductAndCategory(unittest.TestCase):
 
 
     def test_category_initialization(self):
-        product1 = Product("Product 1", "Description 1", 19.99, 5)
-        product2 = Product("Product 2", "Description 2", 15.99, 3)
-        product3 = Product("Product 3", "Description 2", 15.00, 3)
-        category = Category("Test Category", "This is a category description", [product1, product2])
+        category = Category("Test Category", "This is a category description")
 
         self.assertEqual(category.name, "Test Category")
         self.assertEqual(category.description, "This is a category description")
-        self.assertEqual(len(category._products), 2)
-        self.assertEqual(Category.total_categories, 1)
-        self.assertEqual(Category.total_products, 2)
+        self.assertEqual(Category.get_total_categories(), 1)
+        self.assertEqual(Category.get_total_products(), 0)
 
-        # Создаем еще одну категорию для тестирования
-        category2 = Category("Another Category", "Another description", [product3])
-        self.assertEqual(Category.total_categories, 2)
-        self.assertEqual(Category.total_products, 3)  # Количество продуктов должно измениться
+    def test_category_add_product(self):
+        product1 = Product("Product 1", "Description 1", 19.99, 5)
+        category = Category("Test Category", "This is a category description")
 
-    def test_category_add_and_get_product(self):
-        product1 = Product("laptop", "Description 1", 19.99, 5)
-        product2 = Product("Phone", "Description 2", 15.99, 3)
-        category = Category("Another Category", "Another description", [])
+        category.add_product(product1)
+
+        self.assertEqual(Category.get_total_products(), 1)
+        self.assertEqual(category.products, "Product 1, 19.99 руб. Остаток: 5 шт.")
+
+    def test_category_multiple_products(self):
+        product1 = Product("Product 1", "Description 1", 19.99, 5)
+        product2 = Product("Product 2", "Description 2", 15.99, 3)
+
+        category = Category("Test Category", "This is a category description")
+
+        category.add_product(product1)
         category.add_product(product2)
-        self.assertEqual(category._products,  [product2]) # Проверяем добавленный продукт
 
-        category.get_products()
-        self.assertEqual(category._products, [product2]) # Проверяем список продуктов
+        self.assertEqual(Category.get_total_products(), 2)
 
-    def test_products(self):
-        product1 = Product("laptop", "Description 1", 19.99, 5)
-        product2 = Product("Phone", "Description 2", 15.99, 3)
-        category = Category("Another Category", "Another description", [product1, product2])
-
-        # Ожидаемая строка
         expected_output = (
-            "laptop, 19.99 руб. Остаток: 5 шт.\n"
-            "Phone, 15.99 руб. Остаток: 3 шт."
+            "Product 1, 19.99 руб. Остаток: 5 шт.\n"
+            "Product 2, 15.99 руб. Остаток: 3 шт."
         )
 
-        # Проверяем, что вывод соответствует ожидаемому
         self.assertEqual(category.products, expected_output)
+
+    def test_no_products_in_category(self):
+        category = Category("Empty Category", "This category has no products.")
+
+        self.assertEqual(category.products, "Нет товаров в категории.")
 
 
 
