@@ -12,6 +12,18 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+    @classmethod
+    def new_product(cls, product_data:dict):
+        name = product_data.get('name')
+        description = product_data.get('description')
+        price = product_data.get('price')
+        quantity = product_data.get('quantity')
+
+        if name is None or description is None or price is None or quantity is None:
+            return "Все параметры продукта должны быть добавлены"
+
+        return cls(name, description, price, quantity)
+
 
 
 class Category:

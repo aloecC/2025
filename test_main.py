@@ -17,6 +17,30 @@ class TestProductAndCategory(unittest.TestCase):
         self.assertEqual(product.price, 19.99)
         self.assertEqual(product.quantity, 5)
 
+    def test_new_product(self):
+        product_data = {
+            'name': 'Product 1',
+            'description': 'Description of Product 1',
+            'price': 19.99,
+            'quantity': 5
+        }
+        product = Product.new_product(product_data)
+
+        self.assertIsInstance(product, Product)
+        self.assertEqual(product.name, 'Product 1')
+        self.assertEqual(product.description, 'Description of Product 1')
+        self.assertEqual(product.price, 19.99)
+        self.assertEqual(product.quantity, 5)
+
+    def test_missing_product(self):
+        product_data = {
+            'name': 'Product 1',
+            'description': 'Description of Product 1',
+            'price': 19.99,
+        }
+        result = Product.new_product(product_data)
+
+        self.assertEqual(result, "Все параметры продукта должны быть добавлены")
 
 
     def test_category_initialization(self):
