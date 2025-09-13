@@ -40,7 +40,7 @@ class Category:
         self._products = []
 
         Category.total_categories += 1
-        #Category.total_products += len(self._products)
+
 
     @property
     def goods(self):
