@@ -34,7 +34,7 @@ class TestProductAndCategory(unittest.TestCase):
         category.add_product(product1)
 
         self.assertEqual(Category.get_total_products(), 1)
-        self.assertEqual(category.products, "Product 1, 19.99 руб. Остаток: 5 шт.")
+        self.assertEqual(category.goods, ["Product 1, 19.99 руб. Остаток: 5 шт."])
 
     def test_category_multiple_products(self):
         product1 = Product("Product 1", "Description 1", 19.99, 5)
@@ -47,17 +47,17 @@ class TestProductAndCategory(unittest.TestCase):
 
         self.assertEqual(Category.get_total_products(), 2)
 
-        expected_output = (
-            "Product 1, 19.99 руб. Остаток: 5 шт.\n"
+        expected_output = ([
+            "Product 1, 19.99 руб. Остаток: 5 шт.",
             "Product 2, 15.99 руб. Остаток: 3 шт."
-        )
+        ])
 
-        self.assertEqual(category.products, expected_output)
+        self.assertEqual(category.goods, expected_output)
 
     def test_no_products_in_category(self):
         category = Category("Empty Category", "This category has no products.")
 
-        self.assertEqual(category.products, "Нет товаров в категории.")
+        self.assertEqual(category.goods, "Нет товаров в категории.")
 
 
 

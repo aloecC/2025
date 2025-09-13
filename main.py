@@ -38,8 +38,10 @@ class Category:
         if not self._products:
             return "Нет товаров в категории."
 
-        product_strings = [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self._products]
-        return "\n".join(product_strings)
+        products_info = []
+        for product in self._products:
+            products_info.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+        return products_info
 
     def add_product(self, product: Product):
         """
