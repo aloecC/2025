@@ -83,6 +83,10 @@ class TestProductAndCategory(unittest.TestCase):
 
         self.assertEqual(category.goods, "Нет товаров в категории.")
 
+    def test_str_category(self):
+        product1 = Product("Product 1", "Description 1", 19.99, 5)
+        product2 = Product("Product 2", "Description 2", 15.99, 5)
+        category = Category("Empty Category", "This category has no products.")
 
 
 if __name__ == '__main__':

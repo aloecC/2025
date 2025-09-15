@@ -12,6 +12,15 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+    def __str__(self):
+        pass
+    # оптимизировать работу геттера, преобразовав объект продукта в строку.
+
+    def __add__(self, other):
+        pass
+    #Для удобства работы с продуктами реализовать возможность их складывать.
+    #Логика сложения должна работать так, чтобы в итоге у вас получалась полная стоимость всех товаров на складе.
+
     @classmethod
     def new_product(cls, product_data:dict):
         name = product_data.get('name')
@@ -40,6 +49,13 @@ class Category:
         self._products = []
 
         Category.total_categories += 1
+
+    def __str__(self):
+        total_quantity = sum(product.quantity for product in self._products)
+        return f'{self.name}, количество продуктов: {total_quantity} шт.'
+    #В рамках реализации строкового представления для класса Category обойдите все продукты в списке
+    #товаров категории, получите общее количество из атрибута количества и сложите все полученные числа.
+
 
 
     @property
@@ -73,5 +89,4 @@ class Category:
     @classmethod
     def get_total_products(cls):
         return cls.total_products
-
 
