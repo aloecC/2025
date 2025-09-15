@@ -17,7 +17,9 @@ class Product:
     # оптимизировать работу геттера, преобразовав объект продукта в строку.
 
     def __add__(self, other):
-        pass
+        if isinstance(other, Product):
+            all_price = self.quantity * self.price + other.quantity * other.price
+            return f'{all_price} руб.'
     #Для удобства работы с продуктами реализовать возможность их складывать.
     #Логика сложения должна работать так, чтобы в итоге у вас получалась полная стоимость всех товаров на складе.
 

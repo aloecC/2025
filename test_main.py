@@ -49,8 +49,12 @@ class TestProduct(unittest.TestCase):
 
         self.assertEqual(result, "Все параметры продукта должны быть добавлены")
 
-    def test_str_category(self):
+    def test_str_product(self):
         self.assertEqual(str(self.product1), "Product 1, 19.99 руб. Остаток: 5 шт")
+
+    def test_add_product(self):
+        result = f'{self.product1.quantity * self.product1.price + self.product2.quantity * self.product2.price} руб.'
+        self.assertEqual(result, '147.92 руб.')
 
 class TestCategory(unittest.TestCase):
     def setUp(self):
