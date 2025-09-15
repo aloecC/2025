@@ -5,13 +5,23 @@ from main import Product, Category
 
 
 class TestProduct(unittest.TestCase):
+    def setUp(self):
+        self.category = Category("Test Category", "This is a category description")
+        self.product1 = Product("Product 1", "Description 1", 19.99, 5)
+        self.product2 = Product("Product 2", "Description 2", 15.99, 3)
+
+    def tearDown(self):
+        del self.category
+        del self.product1
+        del self.product2
+
 
     def test_product_initialization(self):
-        product = Product("Product 1", "Description 1", 19.99, 5)
-        self.assertEqual(product.name, "Product 1")
-        self.assertEqual(product.description, "Description 1")
-        self.assertEqual(product.price, 19.99)
-        self.assertEqual(product.quantity, 5)
+        #product = Product("Product 1", "Description 1", 19.99, 5)
+        self.assertEqual(self.product1.name, "Product 1")
+        self.assertEqual(self.product1.description, "Description 1")
+        self.assertEqual(self.product1.price, 19.99)
+        self.assertEqual(self.product1.quantity, 5)
 
     def test_new_product(self):
         product_data = {
@@ -39,6 +49,9 @@ class TestProduct(unittest.TestCase):
         result = Product.new_product(product_data)
 
         self.assertEqual(result, "Все параметры продукта должны быть добавлены")
+
+    def test_str_category(self):
+        self.assertEqual(str(self.product1), "Product 1, 19.99 руб. Остаток: 5 шт")
 
 class TestCategory(unittest.TestCase):
     def setUp(self):

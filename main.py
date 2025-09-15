@@ -13,7 +13,7 @@ class Product:
         self.quantity = quantity
 
     def __str__(self):
-        pass
+        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
     # оптимизировать работу геттера, преобразовав объект продукта в строку.
 
     def __add__(self, other):
