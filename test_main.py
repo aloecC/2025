@@ -55,8 +55,8 @@ class TestCategory(unittest.TestCase):
     def test_category_initialization(self):
         self.assertEqual(self.category.name, "Test Category")
         self.assertEqual(self.category.description, "This is a category description")
-        self.assertEqual(Category.get_total_categories(), 1)#2
-        self.assertEqual(Category.get_total_products(), 0)#1
+        self.assertEqual(Category.get_total_categories(), 1)#2 при запуске TestCategory
+        self.assertEqual(Category.get_total_products(), 0)#1 при запуске TestCategory
 
     def test_category_add_product(self):
         self.category.add_product(self.product1)
@@ -68,7 +68,7 @@ class TestCategory(unittest.TestCase):
         self.category.add_product(self.product1)
         self.category.add_product(self.product2)
 
-        self.assertEqual(Category.get_total_products(), 2)#3
+        self.assertEqual(Category.get_total_products(), 2)#3 при запуске TestCategory
 
         expected_output = ([
             "Product 1, 19.99 руб. Остаток: 5 шт.",
