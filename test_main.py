@@ -17,7 +17,6 @@ class TestProduct(unittest.TestCase):
 
 
     def test_product_initialization(self):
-        #product = Product("Product 1", "Description 1", 19.99, 5)
         self.assertEqual(self.product1.name, "Product 1")
         self.assertEqual(self.product1.description, "Description 1")
         self.assertEqual(self.product1.price, 19.99)
