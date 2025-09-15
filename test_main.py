@@ -48,8 +48,8 @@ class TestProductAndCategory(unittest.TestCase):
 
         self.assertEqual(category.name, "Test Category")
         self.assertEqual(category.description, "This is a category description")
-        self.assertEqual(Category.get_total_categories(), 1)
-        self.assertEqual(Category.get_total_products(), 0)
+        self.assertEqual(Category.get_total_categories(), 1)#2
+        self.assertEqual(Category.get_total_products(), 0)#1
 
     def test_category_add_product(self):
         product1 = Product("Product 1", "Description 1", 19.99, 5)
@@ -69,7 +69,7 @@ class TestProductAndCategory(unittest.TestCase):
         category.add_product(product1)
         category.add_product(product2)
 
-        self.assertEqual(Category.get_total_products(), 2)
+        self.assertEqual(Category.get_total_products(), 2)#3
 
         expected_output = ([
             "Product 1, 19.99 руб. Остаток: 5 шт.",
@@ -87,6 +87,10 @@ class TestProductAndCategory(unittest.TestCase):
         product1 = Product("Product 1", "Description 1", 19.99, 5)
         product2 = Product("Product 2", "Description 2", 15.99, 5)
         category = Category("Empty Category", "This category has no products.")
+        category.add_product(product1)
+        category.add_product(product2)
+        expected_str = 'Empty Category, количество продуктов: 10 шт.'
+        self.assertEqual(str(category), expected_str)
 
 
 if __name__ == '__main__':
