@@ -1,7 +1,7 @@
 
 import unittest
 
-from main import Product, Category
+from src.main import Product, Category
 
 
 class TestProduct(unittest.TestCase):
