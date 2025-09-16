@@ -13,13 +13,11 @@ class TestProduct(unittest.TestCase):
         del self.product1
         del self.product2
 
-
     def test_product_initialization(self):
         self.assertEqual(self.product1.name, "Product 1")
         self.assertEqual(self.product1.description, "Description 1")
         self.assertEqual(self.product1.price, 19.99)
         self.assertEqual(self.product1.quantity, 5)
-
 
     def test_new_product(self):
         product_data = {
@@ -35,8 +33,6 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(product.description, 'Description of Product 1')
         self.assertEqual(product.price, 19.99)
         self.assertEqual(product.quantity, 5)
-
-
 
     def test_missing_product(self):
         product_data = {
@@ -55,6 +51,7 @@ class TestProduct(unittest.TestCase):
         result = f'{self.product1.quantity * self.product1.price + self.product2.quantity * self.product2.price} руб.'
         self.assertEqual(result, '147.92 руб.')
 
+
 class TestCategory(unittest.TestCase):
     def setUp(self):
         self.category = Category("Test Category", "This is a category description")
@@ -65,7 +62,6 @@ class TestCategory(unittest.TestCase):
         del self.category
         del self.product1
         del self.product2
-
 
     def test_category_initialization(self):
         self.assertEqual(self.category.name, "Test Category")
