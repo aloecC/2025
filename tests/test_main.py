@@ -1,4 +1,4 @@
-from src.clases import Category, Product
+from src.clases import Category, Product, Smartphone, LawnGrass
 import unittest
 
 
@@ -98,7 +98,37 @@ class TestCategory(unittest.TestCase):
         self.assertEqual(str(self.category), expected_str)
 
 
+class TestSmartphone(unittest.TestCase):
+    def setUp(self):
+        self.smartphone1 = Smartphone("4325 мА·ч", "12", "128гб", 'blue', "IPhone", "В новом дизайне", 39.99, 5)
+        self.smartphone2 = Smartphone("4325 мА·ч", "15", "256гб", 'green', "IPhone", "В новом дизайне", 89.99, 15)
+
+    def tearDown(self):
+        del self.smartphone1
+        del self.smartphone2
+
+    def test_smartphone_initialization(self):
+        self.assertEqual(self.smartphone1.efficiency, "4325 мА·ч")
+        self.assertEqual(self.smartphone1.model, "12")
+        self.assertEqual(self.smartphone1.memory, "128гб")
+        self.assertEqual(self.smartphone1.color, 'blue')
+        self.assertEqual(self.smartphone1.name, 'IPhone')
+        self.assertEqual(self.smartphone1.description, 'В новом дизайне')
+        self.assertEqual(self.smartphone1.price, 39.99)
+        self.assertEqual(self.smartphone1.quantity, 5)
+
+
+class TestLawnGrass(unittest.TestCase):
+    def setUp(self):
+        self.lawngrass1 = LawnGrass("4325 мА·ч", "12", "128гб", 'blue')
+        self.lawngrass2 = LawnGrass("4325 мА·ч", "15", "256гб", 'green')
+
+    def tearDown(self):
+        del self.lawngrass1
+        del self.lawngrass2
+
 
 
 if __name__ == '__main__':
     unittest.main()
+
