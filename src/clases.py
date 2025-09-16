@@ -36,7 +36,6 @@ class Product:
         return cls(name, description, price, quantity)
 
 
-
 class Category:
     name = str
     description = str

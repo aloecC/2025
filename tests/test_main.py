@@ -1,7 +1,5 @@
-
+from src.clases import Category, Product
 import unittest
-
-from src.main import Product, Category
 
 
 class TestProduct(unittest.TestCase):
