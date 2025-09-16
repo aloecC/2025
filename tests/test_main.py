@@ -22,6 +22,7 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(self.product1.price, 19.99)
         self.assertEqual(self.product1.quantity, 5)
 
+
     def test_new_product(self):
         product_data = {
             'name': 'Product 1',
