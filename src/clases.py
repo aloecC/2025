@@ -12,16 +12,28 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+        self.more_products = []#Список продуктов не подходящих категориям Smartphone и LawnGrass
+
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
     # оптимизировать работу геттера, преобразовав объект продукта в строку.
 
     def __add__(self, other):
-        if isinstance(other, Product):
+        if type(self) is type(other):  # Проверяем, являются ли объекты одного типа
             all_price = self.quantity * self.price + other.quantity * other.price
             return f'{all_price} руб.'
+        raise TypeError(f"Cannot add {type(self).__name__} and {type(other).__name__}")
+
+
+        #if isinstance(other, Product):
+        #all_price = self.quantity * self.price + other.quantity * other.price
+        #return f'{all_price} руб.'
+
     #Для удобства работы с продуктами реализовать возможность их складывать.
     #Логика сложения должна работать так, чтобы в итоге у вас получалась полная стоимость всех товаров на складе.
+
+    def add_more_product(self):
+        pass
 
     @classmethod
     def new_product(cls, product_data:dict):
@@ -58,7 +70,6 @@ class Category:
     #товаров категории, получите общее количество из атрибута количества и сложите все полученные числа.
 
 
-
     @property
     def goods(self):
         """
@@ -76,12 +87,12 @@ class Category:
         """
         Добавляет объект класса Product в приватный список товаров категории.
         """
-        if isinstance(product, Product):
+        if isinstance(product, Product) or isinstance(product, Smartphone) or isinstance(product, LawnGrass):
             self._products.append(product)
             Category.total_products += 1  # Увеличиваем общее количество продуктов
             print(f"Товар '{product.name}' добавлен в категорию '{self.name}'")
         else:
-            print(f"Ошибка: Объект '{product}' не является экземпляром класса Product.")
+            print(f"Ошибка: Объект '{product}' не является экземпляром класса Product и дочеррних классов.")
 
     @classmethod
     def get_total_categories(cls):
@@ -94,14 +105,30 @@ class Category:
 
 
 class LawnGrass(Product):
-    def __init__(self):
-        pass
+    def __init__(self, name, description, price, quantity,  country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+        self.lawngrass = [] #Список продуктов класса Lawngrass
 
+    def __add__(self, other):
+        if not isinstance(other, LawnGrass):  # Проверяем, является ли другой объект lawngrass
+            raise TypeError(f"Cannot add LawnGrass and {type(other).__name__}")
+        all_price = self.quantity * self.price + other.quantity * other.price
+        return f'{all_price} руб.'
 
 class Smartphone(Product):
-    def __init__(self, efficiency, model, memory, color, name, description, price, quantity):
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
         self.color = color
+        self.smartphone = [] #Список продуктов класса Smartphone
+
+    def __add__(self, other):
+        if not isinstance(other, Smartphone):  # Проверяем, является ли другой объект Smartphone
+            raise TypeError(f"Cannot add Smartphone and {type(other).__name__}")
+        all_price = self.quantity * self.price + other.quantity * other.price
+        return f'{all_price} руб.'

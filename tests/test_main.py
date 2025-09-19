@@ -7,11 +7,13 @@ class TestProduct(unittest.TestCase):
         self.category = Category("Test Category", "This is a category description")
         self.product1 = Product("Product 1", "Description 1", 19.99, 5)
         self.product2 = Product("Product 2", "Description 2", 15.99, 3)
+        self.smartphone1 = Smartphone("IPhone", "В новом дизайне", 39000, 5, "4325 мА·ч", "12", "128гб", 'blue')
+        self.smartphone2 = Smartphone("IPhone", "В новом дизайне", 89000, 15, "4325 мА·ч", "15", "256гб", 'green')
+        self.lawngrass1 = LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 35, "Russia", "1 year", "green")
+        self.lawngrass2 = LawnGrass('MaxGrass', "Газон вашей мечты", 1000, 15, "Germany", "2 years", "green")
 
     def tearDown(self):
-        del self.category
-        del self.product1
-        del self.product2
+        del (self.category, self.product1, self.product2, self.smartphone1, self.smartphone2, self.lawngrass1, self.lawngrass2)
 
     def test_product_initialization(self):
         self.assertEqual(self.product1.name, "Product 1")
@@ -51,12 +53,30 @@ class TestProduct(unittest.TestCase):
         result = f'{self.product1.quantity * self.product1.price + self.product2.quantity * self.product2.price} руб.'
         self.assertEqual(result, '147.92 руб.')
 
+        result2 = f'{self.smartphone1.quantity * self.smartphone1.price + self.smartphone2.quantity * self.smartphone2.price} руб.'
+        self.assertEqual(result2, '1530000 руб.')
+
+        result3 = f'{self.lawngrass1.quantity * self.lawngrass1.price + self.lawngrass2.quantity * self.lawngrass2.price} руб.'
+        self.assertEqual(result3, '85000 руб.')
+
+        result4 = f'{self.lawngrass1.quantity * self.lawngrass1.price + self.smartphone2.quantity * self.smartphone2.price} руб.'
+        self.assertEqual(result4, '1405000 руб.')
+
+    def test_invalid_addition(self):
+        # Проверка на ошибку при сложении разных типов
+        with self.assertRaises(TypeError):
+            _ = self.smartphone1.quantity * self.smartphone1.price + self.product2.quantity * self.product2.price
+
 
 class TestCategory(unittest.TestCase):
     def setUp(self):
         self.category = Category("Test Category", "This is a category description")
         self.product1 = Product("Product 1", "Description 1", 19.99, 5)
         self.product2 = Product("Product 2", "Description 2", 15.99, 3)
+        self.smartphone1 = Smartphone("IPhone", "В новом дизайне", 39000, 5, "4325 мА·ч", "12", "128гб", 'blue')
+        self.smartphone2 = Smartphone("IPhone", "В новом дизайне", 89000, 15, "4325 мА·ч", "15", "256гб", 'green')
+        self.lawngrass1 = LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 35, "Russia", "1 year", "green")
+        self.lawngrass2 = LawnGrass('MaxGrass', "Газон вашей мечты", 1000, 15, "Germany", "2 years", "green")
 
     def tearDown(self):
         del self.category
@@ -70,10 +90,11 @@ class TestCategory(unittest.TestCase):
         self.assertEqual(Category.get_total_products(), 0)#1 при запуске TestCategory
 
     def test_category_add_product(self):
-        self.category.add_product(self.product1)
+        self.category.add_product(self.smartphone1)
 
         self.assertEqual(Category.get_total_products(), 1)
-        self.assertEqual(self.category.goods, ["Product 1, 19.99 руб. Остаток: 5 шт."])
+        self.assertEqual(self.category.goods, ['IPhone, 39000 руб. Остаток: 5 шт.'])
+
 
     def test_category_multiple_products(self):
         self.category.add_product(self.product1)
@@ -100,8 +121,8 @@ class TestCategory(unittest.TestCase):
 
 class TestSmartphone(unittest.TestCase):
     def setUp(self):
-        self.smartphone1 = Smartphone("4325 мА·ч", "12", "128гб", 'blue', "IPhone", "В новом дизайне", 39.99, 5)
-        self.smartphone2 = Smartphone("4325 мА·ч", "15", "256гб", 'green', "IPhone", "В новом дизайне", 89.99, 15)
+        self.smartphone1 = Smartphone("IPhone", "В новом дизайне", 39000, 5, "4325 мА·ч", "12", "128гб", 'blue')
+        self.smartphone2 = Smartphone("IPhone", "В новом дизайне", 89000, 15, "4325 мА·ч", "15", "256гб", 'green')
 
     def tearDown(self):
         del self.smartphone1
@@ -120,12 +141,21 @@ class TestSmartphone(unittest.TestCase):
 
 class TestLawnGrass(unittest.TestCase):
     def setUp(self):
-        self.lawngrass1 = LawnGrass("4325 мА·ч", "12", "128гб", 'blue')
-        self.lawngrass2 = LawnGrass("4325 мА·ч", "15", "256гб", 'green')
+        self.lawngrass1 = LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 35, "Russia", "1 year", "green")
+        self.lawngrass2 = LawnGrass('MaxGrass', "Газон вашей мечты", 1000, 15,"Germany", "2 years", "green")
 
     def tearDown(self):
         del self.lawngrass1
         del self.lawngrass2
+
+    def test_lawngrass_initialization(self):
+        self.assertEqual(self.lawngrass1.country, 'Russia')
+        self.assertEqual(self.lawngrass1.germination_period, '1 year')
+        self.assertEqual(self.lawngrass1.color, 'green')
+        self.assertEqual(self.lawngrass1.name, 'Grably')
+        self.assertEqual(self.lawngrass1.description, 'Лучше, чем у конкурентов')
+        self.assertEqual(self.lawngrass1.price, 2000)
+        self.assertEqual(self.lawngrass1.quantity, 35)
 
 
 
