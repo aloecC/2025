@@ -60,7 +60,7 @@ class Category:
         self.name = name
         self.description = description
         self._products = []
-        self.products = products
+        self.products = self._products
 
         Category.categori_count += 1
 
