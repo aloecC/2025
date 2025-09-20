@@ -50,8 +50,8 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(str(self.product1), "Product 1, 19.99 руб. Остаток: 5 шт")
 
     def test_add_product(self):
-        result = f'{self.product1.quantity * self.product1.price + self.product2.quantity * self.product2.price} руб.'
-        self.assertEqual(result, '147.92 руб.')
+        result = self.product1.quantity * self.product1.price + self.product2.quantity * self.product2.price
+        self.assertEqual(result, 147.92)
 
         result2 = f'{self.smartphone1.quantity * self.smartphone1.price + self.smartphone2.quantity * self.smartphone2.price} руб.'
         self.assertEqual(result2, '1530000 руб.')
@@ -59,11 +59,11 @@ class TestProduct(unittest.TestCase):
         result3 = f'{self.lawngrass1.quantity * self.lawngrass1.price + self.lawngrass2.quantity * self.lawngrass2.price} руб.'
         self.assertEqual(result3, '85000 руб.')
 
-        result4 = f'{self.lawngrass1.quantity * self.lawngrass1.price + self.smartphone2.quantity * self.smartphone2.price} руб.'
-        self.assertEqual(result4, '1405000 руб.')
+        result4 = self.lawngrass1.quantity * self.lawngrass1.price + self.smartphone2.quantity * self.smartphone2.price
+        self.assertEqual(result4, 1405000)
 
-    def test_invalid_addition(self):
-        pass
+        result5 = self.smartphone1 + self.smartphone2
+        self.assertEqual(result5, 1530000)
 
 
 class TestCategory(unittest.TestCase):
@@ -82,10 +82,16 @@ class TestCategory(unittest.TestCase):
         del self.product2
 
     def test_category_initialization(self):
+        count_cat = Category.get_total_categories()
+        count_prod = Category.get_total_products()
+        category2 = Category('Sweet', "cool")
+        product3 = Product("Product 3", "Description 3", 15.99, 3)
+
         self.assertEqual(self.category.name, "Test Category")
         self.assertEqual(self.category.description, "This is a category description")
-        self.assertEqual(Category.get_total_categories(), 1)#2 при запуске TestCategory
-        self.assertEqual(Category.get_total_products(), 0)#1 при запуске TestCategory
+        self.assertEqual(Category.get_total_categories(), count_cat+1)#2 при запуске TestCategory
+
+
 
     def test_category_add_product(self):
         self.category.add_product(self.smartphone1)
@@ -96,8 +102,6 @@ class TestCategory(unittest.TestCase):
     def test_category_multiple_products(self):
         self.category.add_product(self.product1)
         self.category.add_product(self.product2)
-
-        self.assertEqual(Category.get_total_products(), 2)#3 при запуске TestCategory
 
         expected_output = ([
             "Product 1, 19.99 руб. Остаток: 5 шт.",

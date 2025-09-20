@@ -1,5 +1,3 @@
-
-
 class Product:
     name: str
     description: str
@@ -12,31 +10,36 @@ class Product:
         self.price = price
         self.quantity = quantity
 
-        self.more_products = []#Список продуктов не подходящих категориям Smartphone и LawnGrass
+
+
+        self.more_products = []  # Список продуктов не подходящих категориям Smartphone и LawnGrass
 
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
+
     # оптимизировать работу геттера, преобразовав объект продукта в строку.
 
     def __add__(self, other):
-        if type(self) is type(other):  # Проверяем, являются ли объекты одного типа
-            all_price = self.quantity * self.price + other.quantity * other.price
-            return f'{all_price} руб.'
-        raise TypeError(f"Cannot add {type(self).__name__} and {type(other).__name__}")
+        if not isinstance(other, Product):  # Проверяем, является ли другой объект Product
+            raise TypeError(f"Cannot add ___ and {type(other).__name__}")
+        if type(self) is not type(other):
+            raise TypeError("Нельзя складывать объекты разных классов продуктов")
+        all_price = self.quantity * self.price + other.quantity * other.price
+        return all_price
 
 
-        #if isinstance(other, Product):
-        #all_price = self.quantity * self.price + other.quantity * other.price
-        #return f'{all_price} руб.'
+        # if isinstance(other, Product):
+        # all_price = self.quantity * self.price + other.quantity * other.price
+        # return f'{all_price} руб.'
 
-    #Для удобства работы с продуктами реализовать возможность их складывать.
-    #Логика сложения должна работать так, чтобы в итоге у вас получалась полная стоимость всех товаров на складе.
+    # Для удобства работы с продуктами реализовать возможность их складывать.
+    # Логика сложения должна работать так, чтобы в итоге у вас получалась полная стоимость всех товаров на складе.
 
     def add_more_product(self):
         pass
 
     @classmethod
-    def new_product(cls, product_data:dict):
+    def new_product(cls, product_data: dict):
         name = product_data.get('name')
         description = product_data.get('description')
         price = product_data.get('price')
@@ -49,9 +52,9 @@ class Product:
 
 
 class Category:
-    name = str
-    description = str
-    products = str
+    name: str
+    description: str
+    _products: list
 
     categori_count = 0
     product_count = 0
@@ -59,16 +62,23 @@ class Category:
     def __init__(self, name, description, products=None):
         self.name = name
         self.description = description
-        self._products = []
-        self.products = self._products
+        if products is None:
+            self._products = []
+        else:
+            self._products = products
 
         Category.categori_count += 1
 
     def __str__(self):
         total_quantity = sum(product.quantity for product in self._products)
         return f'{self.name}, количество продуктов: {total_quantity} шт.'
-    #В рамках реализации строкового представления для класса Category обойдите все продукты в списке
-    #товаров категории, получите общее количество из атрибута количества и сложите все полученные числа.
+
+    # В рамках реализации строкового представления для класса Category обойдите все продукты в списке
+    # товаров категории, получите общее количество из атрибута количества и сложите все полученные числа.
+
+    @property
+    def products(self):
+        return self._products
 
     @property
     def goods(self):
@@ -98,25 +108,18 @@ class Category:
     def get_total_categories(cls):
         return cls.categori_count
 
-
     @classmethod
     def get_total_products(cls):
         return cls.product_count
 
 
 class LawnGrass(Product):
-    def __init__(self, name, description, price, quantity,  country, germination_period, color):
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
-        self.lawngrass = [] #Список продуктов класса Lawngrass
-
-    def __add__(self, other):
-        if not isinstance(other, LawnGrass):  # Проверяем, является ли другой объект lawngrass
-            raise TypeError(f"Cannot add LawnGrass and {type(other).__name__}")
-        all_price = self.quantity * self.price + other.quantity * other.price
-        return f'{all_price} руб.'
+        self.lawngrass = []  # Список продуктов класса Lawngrass
 
 
 class Smartphone(Product):
@@ -126,10 +129,4 @@ class Smartphone(Product):
         self.model = model
         self.memory = memory
         self.color = color
-        self.smartphone = [] #Список продуктов класса Smartphone
-
-    def __add__(self, other):
-        if not isinstance(other, Smartphone):  # Проверяем, является ли другой объект Smartphone
-            raise TypeError(f"Cannot add Smartphone and {type(other).__name__}")
-        all_price = self.quantity * self.price + other.quantity * other.price
-        return f'{all_price} руб.'
+        self.smartphone = []  # Список продуктов класса Smartphone
