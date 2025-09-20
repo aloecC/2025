@@ -50,17 +50,11 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(str(self.product1), "Product 1, 19.99 руб. Остаток: 5 шт")
 
     def test_add_product(self):
-        result = self.product1.quantity * self.product1.price + self.product2.quantity * self.product2.price
+        result = self.product1 + self.product2
         self.assertEqual(result, 147.92)
 
-        result2 = f'{self.smartphone1.quantity * self.smartphone1.price + self.smartphone2.quantity * self.smartphone2.price} руб.'
-        self.assertEqual(result2, '1530000 руб.')
-
-        result3 = f'{self.lawngrass1.quantity * self.lawngrass1.price + self.lawngrass2.quantity * self.lawngrass2.price} руб.'
-        self.assertEqual(result3, '85000 руб.')
-
-        result4 = self.lawngrass1.quantity * self.lawngrass1.price + self.smartphone2.quantity * self.smartphone2.price
-        self.assertEqual(result4, 1405000)
+        with self.assertRaises(TypeError):
+            _ = self.smartphone1 + self.lawngrass1
 
         result5 = self.smartphone1 + self.smartphone2
         self.assertEqual(result5, 1530000)
@@ -89,8 +83,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(self.category.name, "Test Category")
         self.assertEqual(self.category.description, "This is a category description")
-        self.assertEqual(Category.get_total_categories(), count_cat+1)#2 при запуске TestCategory
-
+        self.assertEqual(Category.get_total_categories(), count_cat+1)
 
 
     def test_category_add_product(self):
@@ -136,7 +129,7 @@ class TestSmartphone(unittest.TestCase):
         self.assertEqual(self.smartphone1.color, 'blue')
         self.assertEqual(self.smartphone1.name, 'IPhone')
         self.assertEqual(self.smartphone1.description, 'В новом дизайне')
-        self.assertEqual(self.smartphone1.price, 39.99)
+        self.assertEqual(self.smartphone1.price, 39000)
         self.assertEqual(self.smartphone1.quantity, 5)
 
 
