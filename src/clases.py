@@ -53,22 +53,22 @@ class Category:
     description = str
     products = str
 
-    total_categories = 0
-    total_products = 0
+    categori_count = 0
+    product_count = 0
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, products=None):
         self.name = name
         self.description = description
         self._products = []
+        self.products = products
 
-        Category.total_categories += 1
+        Category.categori_count += 1
 
     def __str__(self):
         total_quantity = sum(product.quantity for product in self._products)
         return f'{self.name}, количество продуктов: {total_quantity} шт.'
     #В рамках реализации строкового представления для класса Category обойдите все продукты в списке
     #товаров категории, получите общее количество из атрибута количества и сложите все полученные числа.
-
 
     @property
     def goods(self):
@@ -89,19 +89,19 @@ class Category:
         """
         if isinstance(product, Product) or isinstance(product, Smartphone) or isinstance(product, LawnGrass):
             self._products.append(product)
-            Category.total_products += 1  # Увеличиваем общее количество продуктов
+            Category.product_count += 1  # Увеличиваем общее количество продуктов
             print(f"Товар '{product.name}' добавлен в категорию '{self.name}'")
         else:
             print(f"Ошибка: Объект '{product}' не является экземпляром класса Product и дочеррних классов.")
 
     @classmethod
     def get_total_categories(cls):
-        return cls.total_categories
+        return cls.categori_count
 
 
     @classmethod
     def get_total_products(cls):
-        return cls.total_products
+        return cls.product_count
 
 
 class LawnGrass(Product):
@@ -117,6 +117,7 @@ class LawnGrass(Product):
             raise TypeError(f"Cannot add LawnGrass and {type(other).__name__}")
         all_price = self.quantity * self.price + other.quantity * other.price
         return f'{all_price} руб.'
+
 
 class Smartphone(Product):
     def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
