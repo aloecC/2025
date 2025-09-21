@@ -80,7 +80,7 @@ class Category:
     description: str
     _products: list
 
-    categori_count = 0
+    category_count = 0
     product_count = 0
 
     def __init__(self, name, description, products=None):
@@ -91,7 +91,7 @@ class Category:
         else:
             self._products = products
 
-        Category.categori_count += 1
+        Category.category_count += 1
 
     def __str__(self):
         total_quantity = sum(product.quantity for product in self._products)
@@ -128,7 +128,7 @@ class Category:
 
     @classmethod
     def get_total_categories(cls):
-        return cls.categori_count
+        return cls.category_count
 
     @classmethod
     def get_total_products(cls):
