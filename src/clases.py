@@ -1,15 +1,49 @@
-class Product:
+from abc import ABC,  abstractmethod
+
+
+class InfoMixin:
+    def __init__(self, *args, **kwargs):
+        # Получаем имя класса
+        class_name = self.__class__.__name__
+        # Получаем параметры, которые были переданы
+        params = ', '.join(repr(arg) for arg in args)
+        print(f"Создан объект класса {class_name} с параметрами: {params}")
+
+
+class BaseProduct(ABC):
+    def __init__(self, name, description, price, quantity):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.quantity = quantity
+
+    @abstractmethod
+    def get_info(self):
+        pass
+
+    def change_price(self, new_price):
+        self.price = new_price
+
+    def apply_discount(self, discount):
+        self.price -= discount  # Применение скидки
+
+
+class Product(BaseProduct, InfoMixin):
     name: str
     description: str
     price: float
     quantity: int
 
     def __init__(self, name, description, price, quantity):
+        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.price = price
         self.quantity = quantity
         self.more_products = []  # Список продуктов не подходящих категориям Smartphone и LawnGrass
+
+    def __repr__(self):
+        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
 
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
@@ -21,6 +55,9 @@ class Product:
             raise TypeError("Нельзя складывать объекты разных классов продуктов")
         all_price = self.quantity * self.price + other.quantity * other.price
         return all_price
+
+    def get_info(self):
+        return f"Product: {self.name}, Price: {self.price}руб, Quantity: {self.quantity} шт"
 
     def add_more_product(self):
         pass
@@ -106,6 +143,12 @@ class LawnGrass(Product):
         self.color = color
         self.lawngrass = []  # Список продуктов класса Lawngrass
 
+    def __repr__(self):
+        return f'LawnGrass: {self.name}, Период: {self.germination_period}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
+
+    def get_info(self):
+        return f'LawnGrass: {self.name}, Период: {self.germination_period}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
+
 
 class Smartphone(Product):
     def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
@@ -115,3 +158,9 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
         self.smartphone = []  # Список продуктов класса Smartphone
+
+    def __repr__(self):
+        return f'Smartphone: {self.name}, OS: {self.memory}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
+
+    def get_info(self):
+        return f'Smartphone: {self.name}, OS: {self.memory}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
