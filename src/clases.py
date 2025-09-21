@@ -9,15 +9,10 @@ class Product:
         self.description = description
         self.price = price
         self.quantity = quantity
-
-
-
         self.more_products = []  # Список продуктов не подходящих категориям Smartphone и LawnGrass
 
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
-
-    # оптимизировать работу геттера, преобразовав объект продукта в строку.
 
     def __add__(self, other):
         if not isinstance(other, Product):  # Проверяем, является ли другой объект Product
@@ -26,14 +21,6 @@ class Product:
             raise TypeError("Нельзя складывать объекты разных классов продуктов")
         all_price = self.quantity * self.price + other.quantity * other.price
         return all_price
-
-
-        # if isinstance(other, Product):
-        # all_price = self.quantity * self.price + other.quantity * other.price
-        # return f'{all_price} руб.'
-
-    # Для удобства работы с продуктами реализовать возможность их складывать.
-    # Логика сложения должна работать так, чтобы в итоге у вас получалась полная стоимость всех товаров на складе.
 
     def add_more_product(self):
         pass
@@ -72,9 +59,6 @@ class Category:
     def __str__(self):
         total_quantity = sum(product.quantity for product in self._products)
         return f'{self.name}, количество продуктов: {total_quantity} шт.'
-
-    # В рамках реализации строкового представления для класса Category обойдите все продукты в списке
-    # товаров категории, получите общее количество из атрибута количества и сложите все полученные числа.
 
     @property
     def products(self):

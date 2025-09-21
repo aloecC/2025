@@ -77,14 +77,11 @@ class TestCategory(unittest.TestCase):
 
     def test_category_initialization(self):
         count_cat = Category.get_total_categories()
-        count_prod = Category.get_total_products()
         category2 = Category('Sweet', "cool")
-        product3 = Product("Product 3", "Description 3", 15.99, 3)
 
         self.assertEqual(self.category.name, "Test Category")
         self.assertEqual(self.category.description, "This is a category description")
         self.assertEqual(Category.get_total_categories(), count_cat+1)
-
 
     def test_category_add_product(self):
         self.category.add_product(self.smartphone1)
@@ -152,7 +149,5 @@ class TestLawnGrass(unittest.TestCase):
         self.assertEqual(self.lawngrass1.quantity, 35)
 
 
-
 if __name__ == '__main__':
     unittest.main()
-
