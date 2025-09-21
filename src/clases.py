@@ -85,9 +85,9 @@ class Category:
             self._products.append(product)
             Category.product_count += 1  # Увеличиваем общее количество продуктов
             print(f"Товар '{product.name}' добавлен в категорию '{self.name}'")
-        else:
-            print(f"Ошибка: Объект '{product}' не является экземпляром класса Product и дочеррних классов.")
-            return TypeError
+       #else:
+            #print(f"Ошибка: Объект '{product}' не является экземпляром класса Product и дочеррних классов.")
+            #return TypeError
 
     @classmethod
     def get_total_categories(cls):
