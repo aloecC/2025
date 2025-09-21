@@ -1,12 +1,13 @@
 [tool.poetry]
-name = "poetry add pytest"
-version = "poetry install"
-description = "poetry update"
-authors = ["none"]
+name = "e-commerce"
+version = "0.1.0"
+description = ""
+authors = ["Daria"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+requests = "^2.32.5"
 
 
 [build-system]
