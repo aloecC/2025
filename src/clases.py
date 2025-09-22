@@ -121,9 +121,9 @@ class Category:
         if isinstance(product, Product) or isinstance(product, Smartphone) or isinstance(product, LawnGrass):
             self._products.append(product)
             Category.product_count += 1  # Увеличиваем общее количество продуктов
-            print(f"Товар '{product.name}' добавлен в категорию '{self.name}'")
+            print(f"Товар {product.name} добавлен в категорию {self.name}")
         else:
-            TypeError
+            TypeError(f"Товар {product.name} не добавлен в категорию {self.name}")
 
     @classmethod
     def get_total_categories(cls):
