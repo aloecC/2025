@@ -2,6 +2,54 @@ from src.clases import Category, Product, Smartphone, LawnGrass
 import unittest
 
 
+class TestBaseProduct(unittest.TestCase):
+    def setUp(self):
+        self.category = Category("Test Category", "This is a category description")
+        self.product1 = Product("Product 1", "Description 1", 19.99, 5)
+        self.product2 = Product("Product 2", "Description 2", 15.99, 3)
+        self.smartphone1 = Smartphone("IPhone", "В новом дизайне", 39000, 5, "4325 мА·ч", "12", "128гб", 'blue')
+        self.smartphone2 = Smartphone("IPhone", "В новом дизайне", 89000, 15, "4325 мА·ч", "15", "256гб", 'green')
+        self.lawngrass1 = LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 35, "Russia", "1 year", "green")
+        self.lawngrass2 = LawnGrass('MaxGrass', "Газон вашей мечты", 1000, 15, "Germany", "2 years", "green")
+
+    def tearDown(self):
+        del (self.category, self.product1, self.product2, self.smartphone1, self.smartphone2, self.lawngrass1,
+             self.lawngrass2)
+
+    def test_change_price(self):
+        self.assertEqual(self.lawngrass1.price, 2000)
+        new_price = 2500
+        self.lawngrass1.change_price(new_price)
+        self.assertEqual(self.lawngrass1.price, 2500)
+
+    def test_apply_discount(self):
+        self.assertEqual(self.lawngrass1.price, 2000)
+        discont = 300
+        self.lawngrass1.apply_discount(discont)
+        self.assertEqual(self.lawngrass1.price, 1700)
+
+    def test_get_info(self):
+        self.assertEqual(self.lawngrass1.get_info(), f'LawnGrass: {self.lawngrass1.name},'
+                                                     f' Период: {self.lawngrass1.germination_period},'
+                                                     f' Цена: {self.lawngrass1.price} руб.,'
+                                                     f' Остаток: {self.lawngrass1.quantity} шт.')
+
+
+class TestInfoMixin(unittest.TestCase):
+    def setUp(self):
+        self.category = Category("Test Category", "This is a category description")
+        self.product1 = Product("Product 1", "Description 1", 19.99, 5)
+        self.product2 = Product("Product 2", "Description 2", 15.99, 3)
+        self.smartphone1 = Smartphone("IPhone", "В новом дизайне", 39000, 5, "4325 мА·ч", "12", "128гб", 'blue')
+        self.smartphone2 = Smartphone("IPhone", "В новом дизайне", 89000, 15, "4325 мА·ч", "15", "256гб", 'green')
+        self.lawngrass1 = LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 35, "Russia", "1 year", "green")
+        self.lawngrass2 = LawnGrass('MaxGrass', "Газон вашей мечты", 1000, 15, "Germany", "2 years", "green")
+
+    def tearDown(self):
+        del (self.category, self.product1, self.product2, self.smartphone1, self.smartphone2, self.lawngrass1,
+             self.lawngrass2)
+
+
 class TestProduct(unittest.TestCase):
     def setUp(self):
         self.category = Category("Test Category", "This is a category description")
