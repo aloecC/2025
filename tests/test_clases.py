@@ -1,7 +1,5 @@
 from src.clases import Category, Product, Smartphone, LawnGrass
 import unittest
-from unittest.mock import patch
-import io
 
 
 class TestBaseProduct(unittest.TestCase):

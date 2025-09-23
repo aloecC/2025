@@ -163,6 +163,3 @@ class Smartphone(Product):
 
     def get_info(self):
         return f'Smartphone: {self.name}, OS: {self.memory}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
-
-
-print(Smartphone.__mro__)
