@@ -123,7 +123,7 @@ class Category:
             Category.product_count += 1  # Увеличиваем общее количество продуктов
             print(f"Товар {product.name} добавлен в категорию {self.name}")
         else:
-            raise TypeError(f"Товар {product.name} не добавлен в категорию {self.name}")
+            raise TypeError()
 
     @classmethod
     def get_total_categories(cls):
