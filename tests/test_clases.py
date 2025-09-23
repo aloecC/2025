@@ -79,9 +79,9 @@ class TestCategory(unittest.TestCase):
         count_cat = Category.get_total_categories()
         category2 = Category('Sweet', "cool")
 
-        self.assertEqual(self.category.name, "Test Category")
-        self.assertEqual(self.category.description, "This is a category description")
-        self.assertEqual(Category.get_total_categories(), count_cat+1)
+        self.assertEqual(category2.name, "Sweet")
+        self.assertEqual(category2.description, "cool")
+        self.assertEqual(Category.get_total_categories(), count_cat + 1)
 
     def test_category_add_product(self):
         self.category.add_product(self.smartphone1)
