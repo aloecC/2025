@@ -43,7 +43,7 @@ class Product(BaseProduct, InfoMixin):
         self.more_products = []  # Список продуктов не подходящих категориям Smartphone и LawnGrass
 
     def __repr__(self):
-        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
+        return f'{self.name},{self.description}, {self.price} руб. Остаток: {self.quantity} шт'
 
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
@@ -123,7 +123,7 @@ class Category:
             Category.product_count += 1  # Увеличиваем общее количество продуктов
             print(f"Товар {product.name} добавлен в категорию {self.name}")
         else:
-            raise TypeError()
+            raise TypeError
 
     @classmethod
     def get_total_categories(cls):
