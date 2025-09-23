@@ -1,5 +1,7 @@
 from src.clases import Category, Product, Smartphone, LawnGrass
 import unittest
+from unittest.mock import patch
+import io
 
 
 class TestBaseProduct(unittest.TestCase):
@@ -37,20 +39,24 @@ class TestBaseProduct(unittest.TestCase):
 
 class TestInfoMixin(unittest.TestCase):
 
-    def test_product_creation(capsys):
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_product_creation(self, mock_stdout):
+
         Product("Samsung", "WIFI", 180000.0, 2)
-        captured = capsys.readouterr()
-        assert captured.out.strip() == "Создан объект класса Product с параметрами: 'Samsung', 'WIFI', 180000.0, 2"
+        captured = mock_stdout.getvalue()
+        self.assertEqual(captured.strip(), "Создан объект класса Product с параметрами: Samsung, WIFI, 180000.0, 2")
 
-    def test_smartphone_creation(capsys):
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_smartphone_creation(self, mock_stdout):
         Smartphone("iPhone", "iOS", 100000.0, 1, "4325 мА·ч", 15, "256гб", 'green')
-        captured = capsys.readouterr()
-        assert captured.out.strip() == "Создан объект класса Smartphone с параметрами: 'iPhone', 'iOS', 100000.0, 1, '4325 мА·ч', 15, '256гб', 'green'"
+        captured = mock_stdout.getvalue()
+        self.assertEqual(captured.strip(), "Создан объект класса Smartphone с параметрами: iPhone, iOS, 100000.0, 1, 4325 мА·ч, 15, 256гб, green")
 
-    def test_lawn_grass_creation(capsys):
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_lawn_grass_creation(self, mock_stdout):
         LawnGrass("Бермудский", "Солнечный", 5000.0, 10, "Germany", "2 years", "green")
-        captured = capsys.readouterr()
-        assert captured.out.strip() == "Создан объект класса LawnGrass с параметрами: 'Бермудский', 'Солнечный', 5000.0, 10, 'Germany', '2 years', 'green'"
+        captured = mock_stdout.getvalue()
+        self.assertEqual(captured.strip(), "Создан объект класса LawnGrass с параметрами: 'Бермудский', 'Солнечный', 5000.0, 10, 'Germany', '2 years', 'green'")
 
 
 class TestProduct(unittest.TestCase):
