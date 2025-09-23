@@ -36,18 +36,21 @@ class TestBaseProduct(unittest.TestCase):
 
 
 class TestInfoMixin(unittest.TestCase):
-    def setUp(self):
-        self.category = Category("Test Category", "This is a category description")
-        self.product1 = Product("Product 1", "Description 1", 19.99, 5)
-        self.product2 = Product("Product 2", "Description 2", 15.99, 3)
-        self.smartphone1 = Smartphone("IPhone", "В новом дизайне", 39000, 5, "4325 мА·ч", "12", "128гб", 'blue')
-        self.smartphone2 = Smartphone("IPhone", "В новом дизайне", 89000, 15, "4325 мА·ч", "15", "256гб", 'green')
-        self.lawngrass1 = LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 35, "Russia", "1 year", "green")
-        self.lawngrass2 = LawnGrass('MaxGrass', "Газон вашей мечты", 1000, 15, "Germany", "2 years", "green")
 
-    def tearDown(self):
-        del (self.category, self.product1, self.product2, self.smartphone1, self.smartphone2, self.lawngrass1,
-             self.lawngrass2)
+    def test_product_creation(capsys):
+        Product("Samsung", "WIFI", 180000.0, 2)
+        captured = capsys.readouterr()
+        assert captured.out.strip() == "Создан объект класса Product с параметрами: 'Samsung', 'WIFI', 180000.0, 2"
+
+    def test_smartphone_creation(capsys):
+        Smartphone("iPhone", "iOS", 100000.0, 1, "4325 мА·ч", 15, "256гб", 'green')
+        captured = capsys.readouterr()
+        assert captured.out.strip() == "Создан объект класса Smartphone с параметрами: 'iPhone', 'iOS', 100000.0, 1, '4325 мА·ч', 15, '256гб', 'green'"
+
+    def test_lawn_grass_creation(capsys):
+        LawnGrass("Бермудский", "Солнечный", 5000.0, 10, "Germany", "2 years", "green")
+        captured = capsys.readouterr()
+        assert captured.out.strip() == "Создан объект класса LawnGrass с параметрами: 'Бермудский', 'Солнечный', 5000.0, 10, 'Germany', '2 years', 'green'"
 
 
 class TestProduct(unittest.TestCase):
