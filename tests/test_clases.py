@@ -31,6 +31,7 @@ class TestInfoMixin(unittest.TestCase):
         captured = mock_stdout.getvalue()
         self.assertEqual(captured.strip(), "Создан объект класса LawnGrass с параметрами: 'Бермудский', 'Солнечный', 5000.0, 10, 'Germany', '2 years', 'green'")
 
+
 class TestBaseProduct(unittest.TestCase):
     def setUp(self):
         self.category = Category("Test Category", "This is a category description")
