@@ -64,6 +64,11 @@ class TestBaseProduct(unittest.TestCase):
                                                      f' Цена: {self.lawngrass1.price} руб.,'
                                                      f' Остаток: {self.lawngrass1.quantity} шт.')
 
+    def test_value_error(self):
+        with self.assertRaises(ValueError) as context:
+           LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 0, "Russia", "1 year", "green")
+        self.assertEqual(str(context.exception), 'Товар с нулевым количеством не может быть добавлен')
+
 
 class TestProduct(unittest.TestCase):
     def setUp(self):
