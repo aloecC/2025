@@ -2,12 +2,11 @@ from abc import ABC, abstractmethod
 
 
 class InfoMixin:
-    def __init__(self, *args, **kwargs):
-        # Получаем имя класса
-        class_name = self.__class__.__name__
-        # Получаем параметры, которые были переданы
-        params = ', '.join(repr(arg) for arg in args)
-        print(f"Создан объект класса {class_name} с параметрами: {params}")
+    def __init__(self):
+        print(repr(self))
+
+    def __repr__(self):
+        return f"Создан объект класса {self.__class__.__name__} с параметрами: {self.name}, {self.description}, {self.price}, {self.quantity}"
 
 
 class BaseProduct(ABC):
@@ -30,22 +29,19 @@ class BaseProduct(ABC):
         self.price -= discount  # Применение скидки
 
 
-class Product(BaseProduct, InfoMixin):
+class Product(InfoMixin, BaseProduct):
     name: str
     description: str
     price: float
     quantity: int
 
     def __init__(self, name, description, price, quantity):
-        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.price = price
         self.quantity = quantity
         self.more_products = []  # Список продуктов не подходящих категориям Smartphone и LawnGrass
-
-    def __repr__(self):
-        return f'{self.name},{self.description}, {self.price} руб. Остаток: {self.quantity} шт'
+        super().__init__()
 
     def __str__(self):
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт'
@@ -144,9 +140,6 @@ class LawnGrass(Product):
         self.color = color
         self.lawngrass = []  # Список продуктов класса Lawngrass
 
-    def __repr__(self):
-        return f'LawnGrass: {self.name}, Период: {self.germination_period}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
-
     def get_info(self):
         return f'LawnGrass: {self.name}, Период: {self.germination_period}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
 
@@ -160,8 +153,6 @@ class Smartphone(Product):
         self.color = color
         self.smartphone = []  # Список продуктов класса Smartphone
 
-    def __repr__(self):
-        return f'Smartphone: {self.name}, OS: {self.memory}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
-
     def get_info(self):
         return f'Smartphone: {self.name}, OS: {self.memory}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
+

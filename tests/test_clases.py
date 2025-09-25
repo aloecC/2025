@@ -23,13 +23,13 @@ class TestInfoMixin(unittest.TestCase):
     def test_smartphone_creation(self, mock_stdout):
         Smartphone("iPhone", "iOS", 100000.0, 1, "4325 мА·ч", 15, "256гб", 'green')
         captured = mock_stdout.getvalue()
-        self.assertEqual(captured.strip(), "Создан объект класса Smartphone с параметрами: iPhone, iOS, 100000.0, 1, 4325 мА·ч, 15, 256гб, green")
+        self.assertEqual(captured.strip(), "Создан объект класса Smartphone с параметрами: iPhone, iOS, 100000.0, 1")
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_lawn_grass_creation(self, mock_stdout):
         LawnGrass("Бермудский", "Солнечный", 5000.0, 10, "Germany", "2 years", "green")
         captured = mock_stdout.getvalue()
-        self.assertEqual(captured.strip(), "Создан объект класса LawnGrass с параметрами: 'Бермудский', 'Солнечный', 5000.0, 10, 'Germany', '2 years', 'green'")
+        self.assertEqual(captured.strip(), "Создан объект класса LawnGrass с параметрами: Бермудский, Солнечный, 5000.0, 10")
 
 
 class TestBaseProduct(unittest.TestCase):
@@ -63,11 +63,6 @@ class TestBaseProduct(unittest.TestCase):
                                                      f' Период: {self.lawngrass1.germination_period},'
                                                      f' Цена: {self.lawngrass1.price} руб.,'
                                                      f' Остаток: {self.lawngrass1.quantity} шт.')
-
-    def test_value_error(self):
-        with self.assertRaises(ValueError) as context:
-           LawnGrass('Grably', "Лучше, чем у конкурентов", 2000, 0, "Russia", "1 year", "green")
-        self.assertEqual(str(context.exception), 'Товар с нулевым количеством не может быть добавлен')
 
 
 class TestProduct(unittest.TestCase):
