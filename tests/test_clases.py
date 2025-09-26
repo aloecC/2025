@@ -171,8 +171,8 @@ class TestCategory(unittest.TestCase):
     def test_average_price(self):
         self.assertEqual(self.category.middle_price(), 0)
 
-        self.category.add_product(self.product1)
         self.category.add_product(self.product2)
+        self.category.add_product(self.product1)
 
         self.assertEqual(self.category.middle_price(), 17.99)
 
