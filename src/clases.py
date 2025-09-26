@@ -80,7 +80,6 @@ class Category:
 
     category_count = 0
     product_count = 0
-    all_price = 0
 
     def __init__(self, name, description, products=None):
         self.name = name
@@ -118,17 +117,16 @@ class Category:
         Добавляет объект класса Product в приватный список товаров категории.
         """
         if isinstance(product, Product) or isinstance(product, Smartphone) or isinstance(product, LawnGrass):
-            Category.all_price += product.price
             self._products.append(product)
             Category.product_count += 1  # Увеличиваем общее количество продуктов
             print(f"Товар {product.name} добавлен в категорию {self.name}")
         else:
             raise TypeError
 
-    @classmethod
-    def middle_price(cls):
+    def middle_price(self):
         try:
-            return cls.all_price / cls.product_count
+            all_price = sum(product.price for product in self.products)
+            return all_price / len(self._products)
         except ZeroDivisionError:
             return 0
 
