@@ -3,6 +3,8 @@ from abc import ABC, abstractmethod
 
 class InfoMixin:
     def __init__(self):
+        if self.quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         print(repr(self))
 
     def __repr__(self):
@@ -11,8 +13,6 @@ class InfoMixin:
 
 class BaseProduct(ABC):
     def __init__(self, name, description, price, quantity):
-        if quantity == 0:
-            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.name = name
         self.description = description
         self.price = price
@@ -80,6 +80,7 @@ class Category:
 
     category_count = 0
     product_count = 0
+    all_price = 0
 
     def __init__(self, name, description, products=None):
         self.name = name
@@ -117,11 +118,19 @@ class Category:
         Добавляет объект класса Product в приватный список товаров категории.
         """
         if isinstance(product, Product) or isinstance(product, Smartphone) or isinstance(product, LawnGrass):
+            Category.all_price += product.price
             self._products.append(product)
             Category.product_count += 1  # Увеличиваем общее количество продуктов
             print(f"Товар {product.name} добавлен в категорию {self.name}")
         else:
             raise TypeError
+
+    @classmethod
+    def middle_price(cls):
+        try:
+            return cls.all_price / cls.product_count
+        except ZeroDivisionError:
+            return 0
 
     @classmethod
     def get_total_categories(cls):
@@ -155,4 +164,3 @@ class Smartphone(Product):
 
     def get_info(self):
         return f'Smartphone: {self.name}, OS: {self.memory}, Цена: {self.price} руб., Остаток: {self.quantity} шт.'
-
