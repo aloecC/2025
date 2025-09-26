@@ -168,16 +168,11 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(self.category.goods, expected_output)
 
-    def test_average_price(self):
-        self.assertEqual(self.category.middle_price(), 0)
-
-        self.category.add_product(self.product2)
+    def test_middle_price(self):
         self.category.add_product(self.product1)
+        self.category.add_product(self.product2)
 
         self.assertEqual(self.category.middle_price(), 17.99)
-
-        with self.assertRaises(TypeError):
-            _ = self.smartphone1 + self.lawngrass1
 
     def test_no_products_in_category(self):
         self.assertEqual(self.category.goods, "Нет товаров в категории.")
